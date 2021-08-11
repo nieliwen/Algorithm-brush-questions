@@ -36,6 +36,12 @@ public:
 	map<T, int> get_neighbours(const T& u); /* 得到顶点u的所有边 */
 
 	void show();
+
+	void dft_recursion(const T& u, set<T>& visited, vector<T>& result); /* 深度优先遍历递归辅助函数 */
+	vector<T> depth_first_rec(const T& u); /* 深度优先遍历递归法 */
+	vector<T> depth_first_itr(const T& u); /* 深度优先遍历迭代法*/
+	vector<T> breadth_first(const T& u); /* 广度优先遍历迭代法 */
+
 };
 
 /*
@@ -191,4 +197,72 @@ template <typename T> map<T, int> Graph<T>::get_neighbours(const T& u) {
 	}
 
 	return neighbours;
+}
+/* 深度优先遍历递归辅助函数 */
+template <typename T> void Graph<T>::dft_recursion(const T& u, set<T>& visited, vector<T>& result) {
+	result.push_back(u);
+	visited.insert(u);
+
+	for (Edge<T> edge : adj[u])
+		if (visited.find(edge.vertex) == visited.end())
+			dft_recursion(edge.vertex, visited, result);
+}
+/* 深度优先遍历递归法 */
+template <typename T> vector<T> Graph<T>::depth_first_rec(const T& u) {
+	vector<T> result;
+	set<T> visited;
+	if (contains(u))  dft_recursion(u, visited, result);
+	return  result;
+}
+/* 深度优先遍历迭代法*/
+template <typename T> vector<T> Graph<T>::depth_first_itr(const T& u) {
+	vector<T> result;
+	set<T> visited;
+	stack<T> s;
+
+	s.push(u);
+	while (!s.empty()) {
+		T v = s.top();
+		s.pop();
+		
+		if (visited.find(v) != visited.end()) {
+			continue;
+		}
+		visited.insert(v);
+		result.push_back(v);
+
+		for (auto w : adj[v]) {
+			if (visited.find(w.vertex) == visited.end()) {
+				s.push(w.vertex);
+			}
+		}
+	}
+	return  result;
+}
+
+/* 广度优先遍历迭代法 */
+template <typename T> vector<T> Graph<T>::breadth_first(const T& u) {
+	vector<T>result;
+	set<T> visited;
+	queue<T> q;
+
+	q.push(u);
+	while (!q.empty()) {
+		T v = q.front();
+		q.pop();
+
+		if (visited.find(v) != visited.end()) {
+			continue;
+		}
+
+		visited.insert(v);
+		result.push_back(v);
+
+		for (Edge<T> edge : adj[v]) {
+			if (visited.find(edge.vertex) == visited.end()) {
+				q.push(edge.vertex);
+			}
+		}
+	}
+	return result;
 }
