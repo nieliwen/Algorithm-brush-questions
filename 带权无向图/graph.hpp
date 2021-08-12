@@ -7,59 +7,66 @@ using namespace std;
 #include<queue>
 #include<stack>
 #include "edge.hpp"
-
+#include <limits.h>
 
 template <typename T>
 class Graph {
 public:
-	map<T, set<Edge<T>>> adj;  /* é‚»æ¥è¡¨ */
+	map<T, set<Edge<T>>> adj;  /* ÁÚ½Ó±í */
 
-	bool contains(const T& u); /* åˆ¤æ–­é¡¶ç‚¹uæ˜¯å¦åœ¨å›¾ä¸­ */
-	bool adjacent(const T& u, const T& v); /* åˆ¤æ–­é¡¶ç‚¹uå’Œvæ˜¯å¦ç›¸é‚» */
+	bool contains(const T& u); /* ÅĞ¶Ï¶¥µãuÊÇ·ñÔÚÍ¼ÖĞ */
+	bool adjacent(const T& u, const T& v); /* ÅĞ¶Ï¶¥µãuºÍvÊÇ·ñÏàÁÚ */
 
-	void add_vertex(const T& u); /* æ·»åŠ é¡¶ç‚¹ */
-	void add_edge(const T& u, const T& v, int weight); /* æ·»åŠ è¾¹å’Œæƒé‡ */
+	void add_vertex(const T& u); /* Ìí¼Ó¶¥µã */
+	void add_edge(const T& u, const T& v, int weight); /* Ìí¼Ó±ßºÍÈ¨ÖØ */
 
-	void change_weight(const T& u, const T& v, int weight); /* ä¿®æ”¹æƒé‡ */
+	void change_weight(const T& u, const T& v, int weight); /* ĞŞ¸ÄÈ¨ÖØ */
 
-	void remove_weight(const T& u, const T& v); /* ç§»é™¤æƒé‡ */
-	void remove_vertex(const T& u); /* ç§»é™¤é¡¶ç‚¹ */
-	void remove_edge(const T& u, const T& v); /* ç§»é™¤è¾¹ */
+	void remove_weight(const T& u, const T& v); /* ÒÆ³ıÈ¨ÖØ */
+	void remove_vertex(const T& u); /* ÒÆ³ı¶¥µã */
+	void remove_edge(const T& u, const T& v); /* ÒÆ³ı±ß */
 
-	int degree(const T& u); /* æ±‚é¡¶ç‚¹çš„åº¦æ•° */
-	int num_vertices(); /* æ±‚å›¾ä¸­é¡¶ç‚¹çš„æ€»æ•° */
-	int num_edges(); /* æ±‚å›¾ä¸­è¾¹çš„æ€»æ•°*/
-	int largest_degree(); /* æ±‚å›¾ä¸­çš„æœ€å¤§åº¦æ•° */
+	int degree(const T& u); /* Çó¶¥µãµÄ¶ÈÊı */
+	int num_vertices(); /* ÇóÍ¼ÖĞ¶¥µãµÄ×ÜÊı */
+	int num_edges(); /* ÇóÍ¼ÖĞ±ßµÄ×ÜÊı*/
+	int largest_degree(); /* ÇóÍ¼ÖĞµÄ×î´ó¶ÈÊı */
 
-	int get_weight(const T& u, const T& v); /* å¾—åˆ°æŸä¸¤ä¸ªé¡¶ç‚¹ä¹‹é—´è¾¹çš„æƒé‡ */
-	vector<T> get_vertices(); /* å¾—åˆ°å›¾ä¸­æ‰€æœ‰é¡¶ç‚¹ */
-	map<T, int> get_neighbours(const T& u); /* å¾—åˆ°é¡¶ç‚¹uçš„æ‰€æœ‰è¾¹ */
+	int get_weight(const T& u, const T& v); /* µÃµ½Ä³Á½¸ö¶¥µãÖ®¼ä±ßµÄÈ¨ÖØ */
+	vector<T> get_vertices(); /* µÃµ½Í¼ÖĞËùÓĞ¶¥µã */
+	map<T, int> get_neighbours(const T& u); /* µÃµ½¶¥µãuµÄËùÓĞ±ß */
 
 	void show();
 
-	void dft_recursion(const T& u, set<T>& visited, vector<T>& result); /* æ·±åº¦ä¼˜å…ˆéå†é€’å½’è¾…åŠ©å‡½æ•° */
-	vector<T> depth_first_rec(const T& u); /* æ·±åº¦ä¼˜å…ˆéå†é€’å½’æ³• */
-	vector<T> depth_first_itr(const T& u); /* æ·±åº¦ä¼˜å…ˆéå†è¿­ä»£æ³•*/
-	vector<T> breadth_first(const T& u); /* å¹¿åº¦ä¼˜å…ˆéå†è¿­ä»£æ³• */
+	void dft_recursion(const T& u, set<T>& visited, vector<T>& result); /* Éî¶ÈÓÅÏÈ±éÀúµİ¹é¸¨Öúº¯Êı */
+	vector<T> depth_first_rec(const T& u); /* Éî¶ÈÓÅÏÈ±éÀúµİ¹é·¨ */
+	vector<T> depth_first_itr(const T& u); /* Éî¶ÈÓÅÏÈ±éÀúµü´ú·¨*/
+	vector<T> breadth_first(const T& u); /* ¹ã¶ÈÓÅÏÈ±éÀúµü´ú·¨ */
+
+	Graph<T> prim(T v); /* prim×îĞ¡Éú³ÉÊ÷Ëã·¨ */
+
+	map<T, int> dijkstra(T start); /*  dijkstra×î¶ÌÂ·¾¶Ëã·¨ */
+
+	vector<vector<T>>  get_connected_components(); /* »ñµÃÍ¼ÖĞµÄÁ¬Í¨·ÖÁ¿ */
+	void  print_connected_components(const vector<vector<T>>& connected_components); /* ´òÓ¡Á¬Í¨·ÖÁ¿ */
 
 };
 
-/*
+
 template <typename T> void Graph<T>::show() {
 	for (const auto& u : adj) {
-		cout <<"é¡¶ç‚¹"<< u.first << ": ";
+		cout <<"¶¥µã"<< u.first << ": ";
 		for (const auto& v : adj[u.first])
-			cout << "(ç›¸é‚»é¡¶ç‚¹: " << v.vertex << ", è¾¹çš„æƒé‡: " << v.weight << ") ";
+			cout << "(ÏàÁÚ¶¥µã: " << v.vertex << ", ±ßµÄÈ¨ÖØ: " << v.weight << ") ";
 		cout <<endl;
 	}
 }
-*/
 
-/* åˆ¤æ–­é¡¶ç‚¹uæ˜¯å¦åœ¨å›¾ä¸­ */
+
+/* ÅĞ¶Ï¶¥µãuÊÇ·ñÔÚÍ¼ÖĞ */
 template <typename T> bool Graph<T>::contains(const T& u) {
 	return adj.find(u) != adj.end();
 }
-/* åˆ¤æ–­é¡¶ç‚¹uå’Œvæ˜¯å¦ç›¸é‚» */
+/* ÅĞ¶Ï¶¥µãuºÍvÊÇ·ñÏàÁÚ */
 template <typename T> bool Graph<T>::adjacent(const T& u, const T& v) {
 	if (contains(u) && contains(v) && u != v) {
 		for (auto edge : adj[u])
@@ -68,21 +75,21 @@ template <typename T> bool Graph<T>::adjacent(const T& u, const T& v) {
 	}
 	return false;
 }
-/* æ·»åŠ é¡¶ç‚¹ */
+/* Ìí¼Ó¶¥µã */
 template <typename T> void Graph<T>::add_vertex(const T& u) {
 	if (!contains(u)) {
 		set<Edge<T>> edge_list;
 		adj[u] = edge_list;
 	}
 }
-/* æ·»åŠ è¾¹å’Œæƒé‡ */
+/* Ìí¼Ó±ßºÍÈ¨ÖØ */
 template <typename T> void Graph<T>::add_edge(const T& u, const T& v, int weight) {
 	if (!adjacent(u, v)) {
 		adj[u].insert(Edge<T>(v, weight));
 		adj[v].insert(Edge<T>(u, weight));
 	}
 }
-/* ä¿®æ”¹æƒé‡ */
+/* ĞŞ¸ÄÈ¨ÖØ */
 template <typename T> void Graph<T>::change_weight(const T& u, const T& v, int weight) {
 	if (contains(u) && contains(v)) {
 		if (adj[u].find(Edge<T>(v)) != adj[u].end()) {
@@ -96,7 +103,7 @@ template <typename T> void Graph<T>::change_weight(const T& u, const T& v, int w
 		}
 	}
 }
-/* ç§»é™¤æƒé‡ */
+/* ÒÆ³ıÈ¨ÖØ */
 template <typename T> void Graph<T>::remove_weight(const T& u, const T& v) {
 	if (contains(u) && contains(v)) {
 		if (adj[u].find(Edge<T>(v)) != adj[u].end()) {
@@ -110,7 +117,7 @@ template <typename T> void Graph<T>::remove_weight(const T& u, const T& v) {
 		}
 	}
 }
-/* ç§»é™¤é¡¶ç‚¹ */
+/* ÒÆ³ı¶¥µã */
 template <typename T> void Graph<T>::remove_vertex(const T& u) {
 	if (contains(u)) {
 		for (auto& vertex : adj) {
@@ -120,7 +127,7 @@ template <typename T> void Graph<T>::remove_vertex(const T& u) {
 		adj.erase(u);
 	}
 }
-/* ç§»é™¤è¾¹ */
+/* ÒÆ³ı±ß */
 template <typename T> void Graph<T>::remove_edge(const T& u, const T& v) {
 	if (u == v || !contains(u) || !contains(v)) return;
 
@@ -130,19 +137,19 @@ template <typename T> void Graph<T>::remove_edge(const T& u, const T& v) {
 	}
 }
 
-/* æ±‚é¡¶ç‚¹çš„åº¦æ•° */
+/* Çó¶¥µãµÄ¶ÈÊı */
 template <typename T> int Graph<T>::degree(const T& u) {
 	if (contains(u)) return adj[u].size();
 
-	return -1; // åº¦æ•°ä¸º-1è¯´æ˜å›¾ä¸­æ²¡æœ‰è¯¥é¡¶ç‚¹
+	return -1; // ¶ÈÊıÎª-1ËµÃ÷Í¼ÖĞÃ»ÓĞ¸Ã¶¥µã
 }
 
-/* æ±‚å›¾ä¸­é¡¶ç‚¹çš„æ€»æ•° */
+/* ÇóÍ¼ÖĞ¶¥µãµÄ×ÜÊı */
 template <typename T> int Graph<T>::num_vertices() {
 	return adj.size();
 }
 
-/* æ±‚å›¾ä¸­è¾¹çš„æ€»æ•°*/
+/* ÇóÍ¼ÖĞ±ßµÄ×ÜÊı*/
 template <typename T> int Graph<T>::num_edges() {
 	int count = 0;
 	set<Edge<T>> vertex_set;
@@ -157,7 +164,7 @@ template <typename T> int Graph<T>::num_edges() {
 	return count;
 }
 
-/* æ±‚å›¾ä¸­çš„æœ€å¤§åº¦æ•° */
+/* ÇóÍ¼ÖĞµÄ×î´ó¶ÈÊı */
 template <typename T> int Graph<T>::largest_degree() {
 	if (num_vertices() == 0) return 0;
 
@@ -169,7 +176,7 @@ template <typename T> int Graph<T>::largest_degree() {
 	return max_degree;
 }
 
-/* å¾—åˆ°æŸä¸¤ä¸ªé¡¶ç‚¹ä¹‹é—´è¾¹çš„æƒé‡ */
+/* µÃµ½Ä³Á½¸ö¶¥µãÖ®¼ä±ßµÄÈ¨ÖØ */
 template <typename T> int  Graph<T>::get_weight(const T& u, const T& v) {
 	if (contains(u) && contains(v)) {
 		for (Edge<T> edge : adj[u])
@@ -178,7 +185,7 @@ template <typename T> int  Graph<T>::get_weight(const T& u, const T& v) {
 	return -1;  
 }
 
-/* å¾—åˆ°å›¾ä¸­æ‰€æœ‰é¡¶ç‚¹ */
+/* µÃµ½Í¼ÖĞËùÓĞ¶¥µã */
 template <typename T> vector<T> Graph<T>::get_vertices() {
 	vector<T> vertices;
 	for (auto vertex : adj)
@@ -187,7 +194,7 @@ template <typename T> vector<T> Graph<T>::get_vertices() {
 	return vertices;
 }
 
-/* å¾—åˆ°é¡¶ç‚¹uçš„æ‰€æœ‰è¾¹ */
+/* µÃµ½¶¥µãuµÄËùÓĞ±ß */
 template <typename T> map<T, int> Graph<T>::get_neighbours(const T& u) {
 	map<T, int> neighbours;
 
@@ -198,7 +205,7 @@ template <typename T> map<T, int> Graph<T>::get_neighbours(const T& u) {
 
 	return neighbours;
 }
-/* æ·±åº¦ä¼˜å…ˆéå†é€’å½’è¾…åŠ©å‡½æ•° */
+/* Éî¶ÈÓÅÏÈ±éÀúµİ¹é¸¨Öúº¯Êı */
 template <typename T> void Graph<T>::dft_recursion(const T& u, set<T>& visited, vector<T>& result) {
 	result.push_back(u);
 	visited.insert(u);
@@ -207,14 +214,14 @@ template <typename T> void Graph<T>::dft_recursion(const T& u, set<T>& visited, 
 		if (visited.find(edge.vertex) == visited.end())
 			dft_recursion(edge.vertex, visited, result);
 }
-/* æ·±åº¦ä¼˜å…ˆéå†é€’å½’æ³• */
+/* Éî¶ÈÓÅÏÈ±éÀúµİ¹é·¨ */
 template <typename T> vector<T> Graph<T>::depth_first_rec(const T& u) {
 	vector<T> result;
 	set<T> visited;
 	if (contains(u))  dft_recursion(u, visited, result);
 	return  result;
 }
-/* æ·±åº¦ä¼˜å…ˆéå†è¿­ä»£æ³•*/
+/* Éî¶ÈÓÅÏÈ±éÀúµü´ú·¨*/
 template <typename T> vector<T> Graph<T>::depth_first_itr(const T& u) {
 	vector<T> result;
 	set<T> visited;
@@ -240,7 +247,7 @@ template <typename T> vector<T> Graph<T>::depth_first_itr(const T& u) {
 	return  result;
 }
 
-/* å¹¿åº¦ä¼˜å…ˆéå†è¿­ä»£æ³• */
+/* ¹ã¶ÈÓÅÏÈ±éÀúµü´ú·¨ */
 template <typename T> vector<T> Graph<T>::breadth_first(const T& u) {
 	vector<T>result;
 	set<T> visited;
@@ -259,6 +266,7 @@ template <typename T> vector<T> Graph<T>::breadth_first(const T& u) {
 		result.push_back(v);
 
 		for (Edge<T> edge : adj[v]) {
+		//ÕâÒ»²½µÄ²éÕÒ·ÃÎÊ¿ÉÒÔÊ¡ÂÔ
 			if (visited.find(edge.vertex) == visited.end()) {
 				q.push(edge.vertex);
 			}
@@ -266,3 +274,188 @@ template <typename T> vector<T> Graph<T>::breadth_first(const T& u) {
 	}
 	return result;
 }
+/*
+PrimËã·¨²½Öè
+¸ø¶¨Ò»¸öÁ¬Í¨Í¼G
+	´´½¨Ò»¸ö¿ÕµÄÍ¼T£¬ÓÃÀ´×÷Îª×îĞ¡Éú³ÉÊ÷¡£
+	ÔÚÍ¼GÖĞÈÎÒâÑ¡ÔñÒ»¸öÆğÊ¼¶¥µãv£¬°Ñv¼ÓÈëµ½×îĞ¡Éú³ÉÊ÷TÖĞ¡£
+	µ±×îĞ¡Éú³ÉÊ÷ÖĞ¶¥µãµÄÊıÁ¿Ğ¡ÓÚÔ­Í¼ÖĞµÄ¶¥µãÊıÁ¿Ê±£º
+		ÈÃE¡¯×÷ÎªÁ½¸ö¶¥µãu,vµÄ±ß edge<u,v>µÄ¼¯ºÏ£¬ÆäÖĞ¶¥µãu¡ÊGÇÒu¡ÊT£¬¶¥µãv¡ÊGµ«v?T ¡£
+		´Ó¼¯ºÏE¡¯ÖĞÑ¡Ôñ¶¥µãuºÍ¶¥µãvÖ®¼äÈ¨ÖØ×îĞ¡µÄ±ß: edge<u,v> = min(E¡¯) ¡£
+		ÔÚT´´½¨ĞÂµÄ¶¥µãv£¬È»ºóĞÎ³É±ßedge<u,v> ¡£
+·µ»ØT¡£
+*/
+/* prim×îĞ¡Éú³ÉÊ÷Ëã·¨ */
+template <typename T> Graph<T> Graph<T>::prim(T v) {
+	// ×îĞ¡Éú³ÉÊ÷µÄ´´½¨
+	Graph<T> min_spanning_tree;
+	
+	// ÔÚÉú³ÉÊ÷ÖĞÌí¼Ó¶¥µãv
+	min_spanning_tree.add_vertex(v);
+
+	// ÉèÖÃ´øÈ¨ÖØµÄ¶ÓÁĞ£¬°´µÚÒ»¸öÔªËØ£¨È¨Öµ£©½øĞĞ´ÓĞ¡µ½´óµÄÅÅÁĞ,Ğ¡¶¥¶Ñ¡£
+	priority_queue<pair<int, pair<T, T>>, vector<pair<int, pair<T, T>>>, greater<pair<int, pair<T, T>>>> q;
+
+	// ÉèÖÃ¼¯ºÏvisitedÀ´´æ·ÅÒÑ¾­·ÃÎÊ¹ıµÄ¶¥µã
+	set<T> visited;
+
+	// Èë¶Ó£ºÈë¶ÓµÄÔªËØÊÇÒ»¸öpairÀàĞÍ£¬µÚÒ»¸öÖµÊÇÈ¨ÖØ£¬µÚ¶ş¸öÖµÒ²ÊÇpair
+	// µÚ¶ş¸öÖµµÄpairÀïÃæµÚÒ»¸öÖµÊÇu£¨Ö»ÔÚÉú³ÉÊ÷ÖĞ´æÔÚµÄ¶¥µã£©, µÚ¶ş¸öÖµÊÇv£¨Ö»ÔÚÔÚÔ­Í¼ÖĞ´æÔÚµÄµã£©
+	for (auto neighbour : adj[v]) {
+		q.push(make_pair(neighbour.weight, make_pair(v, neighbour.vertex)));
+	}
+
+	while (!q.empty()) {
+		// ¶ÓÊ×ÔªËØ³ö¶Ó
+		auto front = q.top();
+		q.pop();
+
+		// »ñµÃÒÑÔÚÉú³ÉÊ÷ÖĞµÄ¶¥µãu
+		T u = front.second.first;
+
+		// »ñµÃÔÚÔ­Í¼ÖĞ, µ«²»ÔÚÉú³ÉÊ÷ÖĞµÄ¶¥µãv
+		T v = front.second.second;
+
+		// Èç¹û¶¥µãvÒÑ¾­·ÃÎÊ¹ıÔòÌø¹ı±¾´ËÑ­»·
+		if (visited.find(v) != visited.end()) continue;
+		else visited.insert(v);
+
+		// ÔÚÉú³ÉÊ÷ÖĞÌí¼ÓĞÂµÄ¶¥µãvÒÔ¼°vºÍuÖ®¼äµÄ±ß
+		min_spanning_tree.add_vertex(v);
+		min_spanning_tree.add_edge(u, v, front.first);
+
+		// ÒÀ´Î½«¶¥µãvÉĞÎ´·ÃÎÊ¹ıµÄÁÚ¾Ó·ÅÈëÓÅÏÈ¶ÓÁĞÖĞ
+		for (auto neighbour : adj[v]) {
+			//ÕâÒ»²½µÄ²éÕÒ·ÃÎÊ¿ÉÒÔÊ¡ÂÔ
+			if (visited.find(neighbour.vertex) == visited.end()) {
+				q.push(make_pair(neighbour.weight, make_pair(v, neighbour.vertex)));
+			}
+		}
+	}
+	return min_spanning_tree;
+}
+/*
+DijkstraËã·¨²½Öè
+¸ø¶¨Í¼G£¬¸ÃÍ¼¾ßÓĞ·Ç¸º±ßÈ¨ÖØºÍÆğÊ¼¶¥µãstart¡£
+	1.ÉèÖÃ¶Ô¶¥µãstartµÄ¾àÀëÎª0£¬¶ÔÍ¼ÖĞÆäËû¶¥µãµÄ¾àÀëÎªÕıÎŞÇî¡£
+	2.¶ÔËùÓĞ¶¥µã±ê¼ÇÎªÎ´·ÃÎÊ×´Ì¬¡£
+	3.½«³õÊ¼¶¥µãstartÎªu¡£
+	4.µ±Í¼ÖĞÈÎÓĞÎ´·ÃÎÊ¹ıµÄ¶¥µãÊ±£º
+		1.½«µ±Ç°¶¥µãuÉèÖÃÎªÒÑ·ÃÎÊ×´Ì¬¡£
+		2.¶ÔÓÚµ±Ç°¶¥µãÎ´·ÃÎÊ¹ıµÄÁÚ¾Ó¶¥µãv£¬ÒÀ´Î½«ÁÚ¾Ó¶¥µãvµ½ÆğÊ¼¶¥µãstartµÄ¾àÀë 
+		Óë£¨µ±Ç°¶¥µãuµ½ÆğÊ¼µ½ÆğÊ¼µãstartµÄ¾àÀë + µ±Ç°¶¥µãuµ½¸ÃÁÚ¾Ó¶¥µãvµÄ¾àÀë£©½øĞĞ±È½Ï£¬²¢ÒÔ½ÏĞ¡µÄÒ»¸öÎª×¼¡£
+		3.Ñ¡Ôñ¾ßÓĞ×îĞ¡Ôİ¶¨¾àÀëµÄÎ´·ÃÎÊ¶¥µã£¬²¢½«ÆäÉèÖÃÎªµ±Ç°¶¥µã¡£
+´ËÍâ£¬±éÀú¶¥µãĞèÒªÓÃµ½¹ã¶ÈÓÅÏÈ±éÀúËã·¨£¬Ñ¡Ôñ¾ßÓĞ×îĞ¡Ôİ¶¨¾àÀëµÄÎ´·ÃÎÊ¶¥µãĞèÒªÓÃµ½ÓÅÏÈ¶ÓÁĞ£¨priority_queue£©¡£
+*/
+/*  dijkstra×î¶ÌÂ·¾¶Ëã·¨ */
+template <typename T> map<T,int> Graph<T>::dijkstra(T start) {
+	// ÉèÖÃdisÓÃÀ´´æ·Å³õÊ¼µãµ½Í¼ÖĞÈÎºÎÒ»¸ö¶¥µãµÄ¾àÀë
+	map<T, int> dis;
+	
+	// ÉèÖÃ´øÈ¨ÖØµÄ¶ÓÁĞ£¬°´Ã¿¸öpairµÄµÚÒ»¸öÔªËØ½øĞĞ´ÓĞ¡µ½´óµÄÅÅÁĞ
+	priority_queue<pair<int, T>, vector<pair<int, T>>, greater<pair<int, T>>> q;
+
+	for (T vertex: get_vertices()) {
+		// ÉèÖÃ³õÊ¼¶¥µãµ½×Ô¼ºµÄ¾àÀëÎª0
+		if(vertex == start) dis[start] = 0;
+		// ÉèÖÃ³õÊ¼¶¥µãµ½ÆäËû¶¥µãµÄ¾àÀëÎªÎŞÇî´ó
+		else dis[vertex] = INT_MAX;
+	}
+
+    // ÉèÖÃ¼¯ºÏvisitedÀ´´æ·ÅÒÑ¾­·ÃÎÊ¹ıµÄ¶¥µã
+	set<T> visited;
+
+	// Èë¶Ó£ºÈë¶ÓµÄÔªËØÊÇÒ»¸öpairÀàĞÍ£¬µÚÒ»¸öÖµÊÇÈ¨ÖØ£¬µÚ¶ş¸öÖµÊÇ¶¥µã
+	q.push(make_pair(0,start));
+
+	while (!q.empty()) {
+		// ¶ÓÊ×ÔªËØ³ö¶Ó
+		auto front = q.top();
+		q.pop();
+
+		// »ñµÃµ±Ç°¶¥µã
+		T u = front.second;
+
+		// Èç¹û¸Ã¶¥µãÒÑ¾­·ÃÎÊ¹ıÔòÌø¹ı±¾´ËÑ­»·£¬·ñÔò´æÈëµ½¼¯ºÏvisitedÖĞ±íÊ¾ÒÑ¾­·ÃÎÊ¹ı
+		if (visited.find(u) != visited.end()) continue;
+		else visited.insert(u);
+
+		// »ñµÃµ½¶¥µãuµÄ×î¶ÌÂ·¾¶"shortest_distance_to_u"£¬½«´ËÂ·¾¶´æÈëµ½dis½á¹ûÖĞ
+		int shortest_distance_to_u = front.first;
+		dis[u] = shortest_distance_to_u;
+
+		// ÒÀ´Î·ÃÎÊ¶¥µãuÉĞÎ´·ÃÎÊ¹ıµÄÁÚ¾Ó
+		for (auto v : adj[u]) {
+			if (visited.find(v.vertex) == visited.end()) {
+				// ´Ó¶¥µãuµ½ÁÚ¾ÓvµÄÂ·¾¶¼ÇÎª¡°distance_to_v¡±
+				int distance_to_v = v.weight;
+				q.push(make_pair(shortest_distance_to_u + distance_to_v,  v.vertex));
+			} 
+		}
+	}
+	return dis;
+}
+/*
+Á¬Í¨·ÖÁ¿¶¨Òå
+ÎŞÏòÍ¼ GµÄÒ»¸ö¼«´óÁ¬Í¨×ÓÍ¼³ÆÎª GµÄÒ»¸öÁ¬Í¨·ÖÁ¿£¨»òÁ¬Í¨·ÖÖ§£©¡£
+Á¬Í¨Í¼Ö»ÓĞÒ»¸öÁ¬Í¨·ÖÁ¿£¬¼´Æä×ÔÉí£»·ÇÁ¬Í¨µÄÎŞÏòÍ¼ÓĞ¶à¸öÁ¬Í¨·ÖÁ¿¡£
+»ñÈ¡ËùÓĞÁ¬Í¨·ÖÁ¿
+1.µ±ËùÓĞµÄ¶¥µãÉĞÎ´È«²¿·ÃÎÊÊ±£º
+	1.Ñ¡ÔñÒ»¸öÎ´·ÃÎÊµÄ¶¥µãÊ¹ÓÃ±éÀúËã·¨(Éî¶ÈÓÅÏÈ»òÕß¹ã¶ÈÓÅÏÈ)
+	2.½«Õâ¸ö¶¥µãÄÜµ½´ïµÄËùÓĞ¶¥µã±ê¼ÇÎªÒÑ·ÃÎÊ£¬²¢ÇÒ°ÑËûÃÇ·Åµ½Ò»¸öÁ¬Í¨·ÖÁ¿µÄÊı×éÖĞ¡£
+*/
+/* »ñµÃÍ¼ÖĞµÄÁ¬Í¨·ÖÁ¿ */
+template <typename T> vector<vector<T>> Graph<T>::get_connected_components() {
+	set<T> visited_vertices;
+	vector<vector<T>> connected_components;
+
+	for (auto vertex : adj) {
+
+		// ¶ÔÃ¿Ò»¸öÎ´·ÃÎÊ¹ıµÄ¶¥µã½øĞĞÉî¶ÈÓÅÏÈ±éÀú
+		if (visited_vertices.find(vertex.first) == visited_vertices.end()) {
+			stack<T> s;
+			s.push(vertex.first);
+
+			// ¶¨ÒåÒ»¸öÁÙÊ±±äÁ¿"connected_component"ÓÃÀ´´æ´¢µ±Ç°Á¬Í¨·ÖÁ¿ÖĞµÄ¶¥µã
+			vector<T> connected_component;
+			
+			// Éî¶ÈÓÅÏÈ±éÀú
+			while (!s.empty()) {
+				T u = s.top();
+				s.pop();
+
+				// ½«Î´·ÃÎÊ¹ıµÄ¶¥µã·ÅÈëÁ¬Í¨·ÖÁ¿"connected_component"ÖĞ
+				if (visited_vertices.find(u) == visited_vertices.end()) {
+					connected_component.push_back(u);
+					visited_vertices.insert(u);
+				}
+
+				// µ±Ç°¶¥µãÎ´·ÃÎÊ¹ıµÄÁÚ¾ÓÈëÕ»
+				for (auto neighbour : adj[u])
+					if (visited_vertices.find(neighbour.vertex) == visited_vertices.end())
+						s.push(neighbour.vertex);
+			}
+			// ½«Á¬Í¨·ÖÁ¿·Åµ½Á¬Í¨·ÖÁ¿µÄ¼¯ºÏ"connected_components"ÖĞ
+			connected_components.push_back(connected_component);
+
+		}
+	}
+
+	return connected_components;
+}
+/* ´òÓ¡Í¼ÖĞµÄÁ¬Í¨·ÖÁ¿ */
+template <typename T> void Graph<T>::print_connected_components(const vector<vector<T>>& connected_components ) {
+	int number = connected_components.size();
+	if(number == 1)  cout << "¸ÃÍ¼ÊÇÁ¬Í¨Í¼£¬Ö»ÓĞÒ»¸öÁ¬Í¨·ÖÁ¿£¬¾ÍÊÇÆä×ÔÉí" << endl;
+	else if (number > 1){
+		cout << "Í¼ÖĞ¹²ÓĞ" << number << "¸öÁ¬Í¨·ÖÁ¿" << endl;
+		for (unsigned i = 0; i < connected_components.size(); i++) {
+			cout << "µÚ" << i + 1 << "¸öÁ¬Í¨·ÖÁ¿ÖĞµÄ¶¥µã·Ö±ğÎª:";
+			for (unsigned j = 0; j < connected_components[i].size(); j++) {
+				cout << " " << connected_components[i][j];
+			}
+			cout << endl;
+		}
+	}
+}
+
